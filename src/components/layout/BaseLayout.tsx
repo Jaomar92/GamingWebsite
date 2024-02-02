@@ -1,17 +1,19 @@
 import { Outlet } from "react-router-dom";
 import { Navbar, Footer } from "../common";
 import Menu from "../common/Menu";
+import Carousel from "../features/home/Carousel";
 const BaseLayout = () => {
   return (
     <>
-      <div className="grid grid-rows-3">
+      <div className="flex flex-col">
         <Navbar />
         <div className="container">
-          <div className="grid grid-cols-5">
-            <div className="col-span-1 ">
+          <Carousel />
+          <div className="flex items-stretch">
+            <div className="w-[300px]">
               <Menu />
             </div>
-            <div className="col-span-4">
+            <div className="w-full ml-5">
               <Outlet />
             </div>
           </div>
