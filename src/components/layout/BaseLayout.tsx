@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { Navbar, Footer } from "../common";
 import Menu from "../common/Menu";
-import Carousel from "../features/home/Carousel";
+import Carousel from "../common/Carousel";
+
 const BaseLayout = () => {
   return (
     <>
