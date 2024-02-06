@@ -10,12 +10,14 @@ const BaseLayout = () => {
         <Navbar />
         <div className="container">
           <Carousel />
-          <div className="flex items-stretch">
-            <div className="w-[300px]">
+          <div className="grid grid-cols-12">
+            <div className="col-span-1 ">
               <Menu />
             </div>
-            <div className="w-full ml-5">
-              <Outlet />
+            <div className="col-span-11">
+              <div className="container">
+                <Outlet />
+              </div>
             </div>
           </div>
         </div>
