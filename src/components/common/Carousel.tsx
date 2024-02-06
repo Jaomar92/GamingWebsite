@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../ui/button"; // Adjust this import path to match your project structure
 
 interface CarouselSlide {
   id: number;
@@ -40,26 +40,23 @@ const CarouselData: CarouselSlide[] = [
 ];
 
 const Carousel: React.FC = () => {
-  const [state, SetState] = useState(false);
   const [Index, SetIndex] = useState<number>(0);
-  const intervalRef = useRef<NodeJS.Timer | null>(null);
+  const intervalRef = useRef<number | null>(null);
 
   const startSlideShow = () => {
     if (intervalRef.current !== null) return; // Prevent multiple intervals from being set
-    intervalRef.current = setInterval(() => {
+    intervalRef.current = window.setInterval(() => {
       SetIndex((prevIndex: number) => (prevIndex + 1) % CarouselData.length);
     }, 5000);
   };
 
   const stopSlideShow = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+    if (intervalRef.current !== null) {
+      window.clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
   };
-  const handleChange = () => {
-    SetState(!state);
-  };
+
   useEffect(() => {
     startSlideShow(); // Start the slideshow on component mount
     return () => stopSlideShow(); // Clear the interval on component unmount
@@ -68,12 +65,9 @@ const Carousel: React.FC = () => {
   const handleDotClick = (dotIndex: number) => {
     SetIndex(dotIndex);
   };
+
   return (
-    <div
-      onMouseEnter={stopSlideShow}
-      onMouseLeave={startSlideShow}
-      className="relative h-fit bg-gray-100 rounded-3xl shadow-lg my-5"
-    >
+    <div className="relative h-fit bg-gray-100 rounded-3xl shadow-lg my-5">
       <div
         className="flex flex-col md:flex-row items-stretch rounded-3xl"
         style={{
@@ -82,8 +76,10 @@ const Carousel: React.FC = () => {
           backgroundRepeat: "no-repeat",
           ...CarouselData[Index].customStyles,
         }}
+        onMouseEnter={stopSlideShow}
+        onMouseLeave={startSlideShow}
       >
-        <div className=" text-white w-full h-[400px] md:h-[600px] px-5 flex flex-col items-center py-10 gap-5  justify-start text-3xl text-center font-mono">
+        <div className="text-white w-full h-[400px] md:h-[600px] px-5 flex flex-col items-center py-10 gap-5 justify-start text-3xl text-center font-mono">
           <div className="bg-gray-700/30 p-8 rounded-lg border border-solid border-yellow-300 flex flex-col gap-5 backdrop-blur-sm">
             <div>{CarouselData[Index].title}</div>
             <div className="h-fit">
@@ -93,10 +89,9 @@ const Carousel: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="h-[400px] w-full "></div>
       </div>
       <div className="absolute bottom-5 w-full left-0 py-2">
-        <div className="flex gap-2 items-center justify-center mr-12">
+        <div className="flex gap-2 items-center justify-center">
           {CarouselData.map((_, dotIndex) => (
             <button
               key={dotIndex}
