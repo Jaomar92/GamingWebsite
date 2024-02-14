@@ -23,7 +23,12 @@ const HomePage = () => {
             </Button>
           </div>
           <div>
-            <Button onClick={() => dispatch(increment())}>+</Button>
+            <Button
+              disabled={count === 10}
+              onClick={() => dispatch(increment())}
+            >
+              +
+            </Button>
           </div>
         </div>
       </div>
