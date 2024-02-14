@@ -19,7 +19,7 @@ export const fetchPlatforms = createAsyncThunk<
   ApiResponse<Platform>,
   void,
   { rejectValue: string }
->("genre/fetchPlatforms", async (_, { rejectWithValue }) => {
+>("platform/fetchPlatforms", async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get<ApiResponse<Platform>>(
       `${BASE_URL}platforms?key=${import.meta.env.VITE_RAWG_API_KEY}`

@@ -1,36 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "@/hooks/hooks";
-import { decrement, increment } from "@/redux/utils/CounterSlice";
+import { fetchGames } from "@/redux/store/slices/gameSlice";
+import { useEffect } from "react";
+
 import { useDispatch } from "react-redux";
 
 const HomePage = () => {
-  const count = useAppSelector((state) => state.counter.value);
+  const games = useAppSelector((state) => state.games.games);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGames());
+  }, [dispatch]);
+
+  console.log(games);
   return (
     <div>
-      <div>
-        Testing out the Counter to see if the Store is configured correctly
+      Game List
+      <div className="grid grid-cols-3 gap-5">
+        {games?.results.map((game) => {
+          return (
+            <div
+              style={{
+                backgroundImage: `url("${game.background_image}")`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+              }}
+              className="h-[200px]"
+            >
+              <div>{game.name}</div>
+            </div>
+          );
+        })}
       </div>
-      <div className="my-3 flex flex-col gap-2 items-center justify-center">
-        <div>Count: {count}</div>
-        <div className="flex items-center gap-3">
-          <div>
-            <Button
-              onClick={() => dispatch(decrement())}
-              disabled={count === 0}
-            >
-              -
-            </Button>
-          </div>
-          <div>
-            <Button
-              disabled={count === 10}
-              onClick={() => dispatch(increment())}
-            >
-              +
-            </Button>
-          </div>
-        </div>
+      <div className="py-3">
+        <Button
+          onClick={() => {
+            games?.next;
+          }}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );

@@ -8,8 +8,18 @@ const Footer = () => {
           <div>3</div>
         </div>
         <div className="text-center md:text-end py-3 font-mono">
-          <div>Powered by RAWG.io</div>
-          All rights reserved to Jeffrey Aroun bin Omar
+          <div>
+            Powered by{" "}
+            <a
+              href="https://rawg.io"
+              target="_blank"
+              rel="noreferrer"
+              className="font-bold"
+            >
+              RAWG.io
+            </a>
+          </div>
+          Made by Jeffrey Aroun bin Omar
         </div>
       </div>
     </div>

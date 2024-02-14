@@ -4,13 +4,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface initialStateTypes {
-  data: ApiResponse<Game> | null;
+  games: ApiResponse<Game> | null;
   status: "idle" | "loading" | "success" | "failed";
 }
 
 const initialState: initialStateTypes = {
   status: "idle",
-  data: null,
+  games: null,
 };
 
 const BASE_URL = "https://api.rawg.io/api/";
@@ -19,7 +19,7 @@ export const fetchGames = createAsyncThunk<
   ApiResponse<Game>,
   void,
   { rejectValue: string }
->("genre/fetchGenres", async (_, { rejectWithValue }) => {
+>("games/fetchGenres", async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get<ApiResponse<Game>>(
       `${BASE_URL}games?key=${import.meta.env.VITE_RAWG_API_KEY}`
@@ -34,7 +34,7 @@ export const fetchGames = createAsyncThunk<
 });
 
 const gameSlice = createSlice({
-  name: "genre",
+  name: "gamesList",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -44,7 +44,7 @@ const gameSlice = createSlice({
       })
       .addCase(fetchGames.fulfilled, (state, action) => {
         state.status = "success";
-        state.data = action.payload;
+        state.games = action.payload;
       })
       .addCase(fetchGames.rejected, (state) => {
         state.status = "failed";
