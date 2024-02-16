@@ -17,13 +17,17 @@ const BASE_URL = "https://api.rawg.io/api/";
 
 export const fetchGames = createAsyncThunk<
   ApiResponse<Game>,
-  void,
+  { page?: number; genre?: string },
   { rejectValue: string }
->("games/fetchGenres", async (_, { rejectWithValue }) => {
+>("games/fetchGames", async ({ page = 1, genre }, { rejectWithValue }) => {
   try {
-    const response = await axios.get<ApiResponse<Game>>(
-      `${BASE_URL}games?key=${import.meta.env.VITE_RAWG_API_KEY}`
-    );
+    let url = `${BASE_URL}games?key=${
+      import.meta.env.VITE_RAWG_API_KEY
+    }&page=${page}`;
+    if (genre) {
+      url += `&genres=${genre}`;
+    }
+    const response = await axios.get<ApiResponse<Game>>(url);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

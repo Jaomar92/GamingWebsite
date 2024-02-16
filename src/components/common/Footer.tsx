@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="bg-zinc-900 text-primary-foreground">
+    <footer className="bg-zinc-900 text-primary-foreground">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div>1</div>
@@ -22,7 +22,7 @@ const Footer = () => {
           Made by Jeffrey Aroun bin Omar
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

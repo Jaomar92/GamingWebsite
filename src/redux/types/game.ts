@@ -20,8 +20,8 @@ export interface Game {
   name: string;
   released: string;
   tba: boolean;
-  background_image: string;
-  rating: number;
+  background_image?: string;
+  rating?: number;
   rating_top: number;
   ratings: Rating[];
   ratings_count: number;

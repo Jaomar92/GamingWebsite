@@ -1,41 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { fetchGenres } from "@/redux/store/slices/genresSlice";
 import { RootState } from "@/redux/store/store";
 import { fetchPlatforms } from "@/redux/store/slices/platformSlice";
+import { fetchGames } from "@/redux/store/slices/gameSlice";
 
-const PlatformsMenu = [
-  {
-    id: 1,
-    name: "PC",
-  },
-  {
-    id: 2,
-    name: "PlayStation4",
-  },
-  {
-    id: 3,
-    name: "Xbox One",
-  },
-  {
-    id: 4,
-    name: "Nintendo Switch",
-  },
-  {
-    id: 5,
-    name: "IOS",
-  },
-  {
-    id: 6,
-    name: "Android",
-  },
-];
 const Menu = () => {
   const dispatch = useAppDispatch();
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+
   useEffect(() => {
     dispatch(fetchGenres());
     dispatch(fetchPlatforms());
   }, [dispatch]);
+
+  useEffect(() => {
+    // Check if selectedGenre is not null before dispatching
+    if (selectedGenre) {
+      dispatch(fetchGames({ genre: selectedGenre }));
+    }
+  }, [dispatch, selectedGenre]);
 
   const genreState = useAppSelector((state: RootState) => state.genre.data);
   const Genres = genreState?.results;
@@ -51,7 +35,11 @@ const Menu = () => {
         <div className="pb-3">
           <ul>
             {Genres?.map((genre) => (
-              <li key={genre.id} className="cursor-pointer hover:text-gray-500">
+              <li
+                key={genre.id}
+                className="cursor-pointer hover:text-gray-500"
+                onClick={() => setSelectedGenre(genre.slug)}
+              >
                 {genre.name}
               </li>
             ))}

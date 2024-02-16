@@ -1,8 +1,17 @@
-// genre.ts
-import { ApiResponse, GenreBasic, GameBasic } from "./sharedInterfaces";
+import { Game } from "./sharedInterfaces";
 
-export interface GenreDetailed extends GenreBasic {
-  games: GameBasic[];
+export interface ApiResponse {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  results: Genre[];
 }
 
-export type GenreApiResponse = ApiResponse<GenreDetailed>;
+export interface Genre {
+  id: number;
+  name: string;
+  slug: string;
+  games_count: number;
+  image_background: string;
+  games: Game[];
+}
