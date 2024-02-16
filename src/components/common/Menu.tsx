@@ -37,7 +37,9 @@ const Menu = () => {
             {Genres?.map((genre) => (
               <li
                 key={genre.id}
-                className="cursor-pointer hover:text-gray-500"
+                className={`cursor-pointer hover:text-gray-500 ${
+                  selectedGenre === genre.slug ? "font-bold cursor-default" : ""
+                }`}
                 onClick={() => setSelectedGenre(genre.slug)}
               >
                 {genre.name}
